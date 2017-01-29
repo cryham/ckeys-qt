@@ -4,12 +4,12 @@
 #include <QtGui/QOpenGLFunctions>
 
 
-class SquircleRenderer : public QObject, protected QOpenGLFunctions
+class BackgroundRenderer : public QObject, protected QOpenGLFunctions
 {
     Q_OBJECT
 public:
-    SquircleRenderer() : m_t(0), m_program(0) { }
-    ~SquircleRenderer();
+    BackgroundRenderer() : m_t(0), shader(0) { }
+    ~BackgroundRenderer();
 
     void setT(qreal t) { m_t = t; }
     void setViewportSize(const QSize &size) { m_viewportSize = size; }
@@ -17,11 +17,12 @@ public:
 
 public slots:
     void paint();
+    void paintBackground();
 
 private:
     QSize m_viewportSize;
     qreal m_t;
-    QOpenGLShaderProgram *m_program;
+    QOpenGLShaderProgram *shader;
     QQuickWindow *m_window;
 
 public:
@@ -30,13 +31,13 @@ public:
 };
 
 
-class Squircle : public QQuickItem
+class Background : public QQuickItem
 {
     Q_OBJECT
     Q_PROPERTY(qreal t READ t WRITE setT NOTIFY tChanged)
 
 public:
-    Squircle();
+    Background();
 
     qreal t() const { return m_t; }
     void setT(qreal t);
@@ -53,8 +54,8 @@ private slots:
 
 private:
     qreal m_t;
-    SquircleRenderer *m_renderer;
+    BackgroundRenderer *m_renderer;
 
 public:
-    SquircleRenderer *getRenderer() {  return m_renderer;  }
+    BackgroundRenderer *getRenderer() {  return m_renderer;  }
 };

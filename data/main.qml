@@ -7,14 +7,14 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.1
 import QtQuick.Controls.Styles 1.4
 import QtQuick.Controls.Private 1.0
-import QSquircle 1.0
+import QBackground 1.0
 
 Item {
 
     width: 1200
     height: 600
 
-    Squircle {
+    Background {
         objectName: "base"
         SequentialAnimation on t {
             NumberAnimation { to: 1; duration: 2500; easing.type: Easing.InQuad }
@@ -22,6 +22,13 @@ Item {
             loops: Animation.Infinite
             running: true
         }
+    }
+
+    Action {
+        id: cutAction
+        text: "Quit"
+        shortcut: "esc"
+        onTriggered: Qt.quit()
     }
 
     /*GridLayout {

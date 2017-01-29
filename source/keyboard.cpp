@@ -43,8 +43,9 @@ void Keyboard::Remove()
 //  read json layout from combo id
 void Keyboard::LoadIndex(int id)
 {
+    //TODO: set combo index to id
     if (id < files.size())
-    LoadFromJson((data + files.at(id)).toStdString());
+        LoadFromJson((data + files.at(id)).toStdString());
 }
 
 //  add key button in qml

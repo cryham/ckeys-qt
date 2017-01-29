@@ -4,7 +4,7 @@
 #include <QQmlContext>
 #include <QDir>
 
-#include "squircle.h"
+#include "Background.h"
 #include "ComboBoxModel.h"
 #include "keyboard.h"
 
@@ -23,7 +23,7 @@ int main(int argc, char **argv)
     }
 
     //  main.qml  gui create, load
-    qmlRegisterType<Squircle>("QSquircle", 1, 0, "Squircle");
+    qmlRegisterType<Background>("QBackground", 1, 0, "Background");
 
 
     QQuickView view;
