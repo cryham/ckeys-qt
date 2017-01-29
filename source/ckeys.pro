@@ -1,7 +1,9 @@
 QT += qml quick
 
-HEADERS += squircle.h
-SOURCES += squircle.cpp main.cpp
+HEADERS += squircle.h \
+    jsmn.h
+SOURCES += squircle.cpp main.cpp \
+    jsmn.c
 RESOURCES += ckeys.qrc
 
 target.path = bin
