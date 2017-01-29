@@ -72,7 +72,24 @@ int main(int argc, char **argv)
     view.create();
 
 //    Squircle* sq = view.findChild<Squircle*>("base");  //-
+    const QVariant &parent = QVariant::fromValue<QObject*>(view.rootObject());
+    QQmlComponent co(view.engine(), QUrl("qrc:///Button.qml"));
 
+
+
+    //  info
+    //-----------------------------------------------------------
+    #if 1
+    QObject *o = co.create();
+    o->setProperty("xx", 20);  o->setProperty("yy", 20);
+    o->setProperty("w", 100);  o->setProperty("h", 30);
+    o->setProperty("sc", 16);
+    o->setProperty("txt", "Info");
+    o->setProperty("parent", parent);
+    #endif
+
+    //  run
+    //-----------------------------------------------------------
     view.show();
 
     return app.exec();
