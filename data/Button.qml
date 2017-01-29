@@ -41,5 +41,14 @@ Item {
             anchors.left: parent.left
             anchors.margins: 5
         }
+
+        MouseArea
+        {
+            anchors.fill: parent
+            //onClicked: notificationClient.notification = "User is sad :("
+            onPressed: on = true
+            onReleased: on = false
+            //onHoveredChanged: on = !on
+        }
     }
 }

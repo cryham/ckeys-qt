@@ -34,18 +34,37 @@ bool Keyboard::Init(QString appPath)
 void Keyboard::Remove()
 {
     //  remove layout, all keys
-    foreach (auto o, objs) {
+    for (auto o : objs) {
         o->deleteLater();
     }
     objs.clear();
 }
 
+//  read json layout from combo id
 void Keyboard::LoadIndex(int id)
 {
+    if (id < files.size())
     LoadFromJson((data + files.at(id)).toStdString());
 }
 
-//  read json layout from file
+//  add key button in qml
+QObject* Keyboard::AddButton(
+    int x, int y, int w, int h, float sc, QString txt)
+{
+    QObject *o = cBtn->create();
+    o->setProperty("xx", x);
+    o->setProperty("yy", y);
+    o->setProperty("w", w);
+    o->setProperty("h", h);
+    o->setProperty("txt", txt);
+    o->setProperty("sc", sc);
+
+    QQmlProperty::write(o, "parent", QVariant::fromValue<QObject*>(root));
+    QQmlEngine::setObjectOwnership(o, QQmlEngine::CppOwnership);
+    return o;
+}
+
+//  load layout, read json layout from file
 //-----------------------------------------------------------------------------------------------------------
 void Keyboard::LoadFromJson(std::string path)
 {
@@ -96,7 +115,7 @@ void Keyboard::LoadFromJson(std::string path)
             else
             {
                 //  replace
-                /*bool k2 = */replK(k, "\\n", "\n");  // key has 2 descr: up,dn
+                /*bool has2 =*/ replK(k, "\\n", "\n");  // key has 2 descr: upper, lower
                 replK(k, "Lock", "");  // rem Lock
                 replK(k, "\\\\", "\\");
                 replK(k, "\\\"", "\"");
@@ -106,19 +125,11 @@ void Keyboard::LoadFromJson(std::string path)
                 //float sf = k2 ? 0.8f :
                 //    k.length() > 1 ? 0.7f : 1.f;
 
-                //  add key in qml
-                QObject *o = cBtn->create();
-                o->setProperty("xx", x0 + x);  x += w * sx;
-                o->setProperty("yy", y0 + y);
-                o->setProperty("w", sx * w - se);
-                o->setProperty("h", sy * h - se);
-                o->setProperty("txt", QString(k.c_str()));
-                o->setProperty("sc", sf * yfnt);
-
-                //o->setProperty("parent", parent);
-                QQmlProperty::write(o, "parent", QVariant::fromValue<QObject*>(root));
-                QQmlEngine::setObjectOwnership(o, QQmlEngine::CppOwnership);
-                //o->deleteLater();  //remove all..
+                //  add key button in qml
+                QObject *o = AddButton(x0 + x,  y0 + y,
+                                  sx * w - se,  sy * h - se,
+                                  sf * yfnt, QString(k.c_str()));
+                x += w * sx;
                 objs.push_back(o);
 
                 w = 1.f;  h = 1.f;  // reset

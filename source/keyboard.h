@@ -15,6 +15,8 @@ public:
 
     void LoadIndex(int id);
     void LoadFromJson(std::string path);
+    QObject* AddButton(
+        int x, int y, int w, int h, float sc, QString txt);
 
     QQmlComponent* cBtn;
     QObject *root;
