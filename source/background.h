@@ -2,18 +2,21 @@
 #include <QtQuick/QQuickItem>
 #include <QtGui/QOpenGLShaderProgram>
 #include <QtGui/QOpenGLFunctions>
+#include <HQTimer.h>
 
 
 class BackgroundRenderer : public QObject, protected QOpenGLFunctions
 {
     Q_OBJECT
 public:
-    BackgroundRenderer() : m_t(0), shader(0) { }
+    BackgroundRenderer() : m_t(0), shader(0) {  }
     ~BackgroundRenderer();
 
-    void setT(qreal t) { m_t = t; }
-    void setViewportSize(const QSize &size) { m_viewportSize = size; }
-    void setWindow(QQuickWindow *window) { m_window = window; }
+    void setT(qreal t) {  m_t = t;  }
+    void setViewportSize(const QSize &size) {  m_viewportSize = size;  }
+    void setWindow(QQuickWindow *window) {  m_window = window;  }
+
+    void setFps(QObject* obj) {  m_Fps = obj;  }
 
 public slots:
     void paint();
@@ -25,9 +28,8 @@ private:
     QOpenGLShaderProgram *shader;
     QQuickWindow *m_window;
 
-public:
-    //  keys
-    std::vector<QObject*> keys;
+    QObject* m_Fps;
+    HQTimer tim;
 };
 
 
@@ -38,9 +40,12 @@ class Background : public QQuickItem
 
 public:
     Background();
+    ~Background() {  m_renderer->setFps(0);  }
 
     qreal t() const { return m_t; }
     void setT(qreal t);
+
+    void setFps(QObject* obj) {  m_Fps = obj;  }
 
 signals:
     void tChanged();
@@ -55,6 +60,8 @@ private slots:
 private:
     qreal m_t;
     BackgroundRenderer *m_renderer;
+
+    QObject* m_Fps;
 
 public:
     BackgroundRenderer *getRenderer() {  return m_renderer;  }

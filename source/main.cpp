@@ -51,9 +51,13 @@ int main(int argc, char **argv)
     ev.kbd = &kbd;
     kbd.cBtn = &cBtn;
     kbd.root = view.rootObject();  //engine.rootObjects().first();
-    //QObject *wnd = root->findChild<QObject*>("window");
+    Background *bck = kbd.root->findChild<Background*>("base");
 
     kbd.LoadIndex(2);  // last .set
+
+    //  fps
+    QObject* oFps = kbd.root->findChild<QObject*>("fps");
+    if (bck)  bck->setFps(oFps);
 
 
     //  run

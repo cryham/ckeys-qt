@@ -4,11 +4,13 @@ HEADERS += \
     jsmn.h \
     keyboard.h \
     ComboBoxModel.h \
+    HQTimer.h \
     background.h
 SOURCES += main.cpp \
     jsmn.c \
     keyboard.cpp \
     ComboBoxModel.cpp \
+    HQTimer.cpp \
     background.cpp
 RESOURCES +=
 

@@ -1,6 +1,4 @@
-#ifndef COMBOBOXMODEL_H
-#define COMBOBOXMODEL_H
-
+#pragma once
 #include <QObject>
 #include <QStringList>
 #include <QDebug>
@@ -55,16 +53,13 @@ public:
 
 
     Q_INVOKABLE void comboChange(int id) const {
-        qDebug() << "id: " << id;
+        //qDebug() << "id: " << id;
         kbd->LoadIndex(id);
     }
 
     Q_INVOKABLE void btnClick() const {
-        qDebug() << "aaa";
+        //qDebug() << "aaa";
     }
 
     class Keyboard* kbd;
 };
-
-
-#endif // COMBOBOXMODEL_H

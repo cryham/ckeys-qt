@@ -13,22 +13,24 @@ class Keyboard
 public:
     Keyboard();
 
+    //  init, path  ----
+    bool Init(QString appPath);
+
+    QString data;  // path to data dir
+
+    //  load layouts  ----
     void LoadIndex(int id);
     void LoadFromJson(std::string path);
     QObject* AddButton(
         int x, int y, int w, int h, float sc, QString txt);
-
-    QQmlComponent* cBtn;
-    QObject *root;
-
     void Remove();
-
-    bool Init(QString appPath);
-    QString data;  // path to data dir
 
     QStringList files;  // .json layouts
 
-    std::vector<QObject*> objs;
+//private:  //  ----
+    QQmlComponent* cBtn;
+    QObject *root;
+    std::vector<QObject*> objs;  // key buttons
 };
 
 

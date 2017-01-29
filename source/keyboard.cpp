@@ -31,16 +31,16 @@ bool Keyboard::Init(QString appPath)
     return true;
 }
 
+//  remove layout, all keys
 void Keyboard::Remove()
 {
-    //  remove layout, all keys
     for (auto o : objs) {
         o->deleteLater();
     }
     objs.clear();
 }
 
-//  read json layout from combo id
+//  load layout, from combo id
 void Keyboard::LoadIndex(int id)
 {
     //TODO: set combo index to id

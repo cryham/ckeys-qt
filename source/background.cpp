@@ -30,6 +30,13 @@ void BackgroundRenderer::paint()
 {
     paintBackground();
 
+    //  update Fps  ----
+    //tim.iv1 = 0.2;
+    tim.update();
+    if (m_Fps)
+        m_Fps->setProperty("text", "Fps: "+ QString::number(tim.FR, 'g', 4));
+                            //QString("Fps: %1").arg(tim.FR));
+
     //  sleep  ...
     QThread::msleep(10);  // param..
 }
@@ -75,7 +82,7 @@ void BackgroundRenderer::paintBackground()
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 Background::Background()
-    : m_t(0), m_renderer(0)
+    : m_t(0), m_renderer(0), m_Fps(0)
 {
     connect(this, &QQuickItem::windowChanged, this, &Background::handleWindowChanged);
 }
@@ -116,6 +123,7 @@ void Background::sync()
         m_renderer = new BackgroundRenderer();
         connect(window(), &QQuickWindow::beforeRendering, m_renderer, &BackgroundRenderer::paint, Qt::DirectConnection);
     }
+    m_renderer->setFps(m_Fps);
     m_renderer->setViewportSize(window()->size() * window()->devicePixelRatio());
     m_renderer->setT(m_t);
     m_renderer->setWindow(window());
