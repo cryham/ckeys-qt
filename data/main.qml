@@ -51,7 +51,12 @@ Item {
         Label {
             id: label1
             //color: white
+
             text: qsTr("Title")
+            width: 100
+
+            font.family: "Tahoma"
+            font.pixelSize: 16
         }
 
         /*Item {
@@ -77,6 +82,11 @@ Item {
 
             model: comboModel.comboList
 
+            /*menu: ContextMenu {
+                MenuItem { text: "Option A"}
+                MenuItem { text: "Option B"}
+            }*/
+
             //model: model1
             /* ListModel {
                 id: cbItems
@@ -84,7 +94,7 @@ Item {
                 ListElement { text: "Apple" }
                 ListElement { text: "Coconut" }
             }*/
-            width: 200
+            width: 160
         }
 
 
@@ -126,45 +136,17 @@ Item {
             style: sliderStyle
         }
 
-        RowLayout {
-            Layout.alignment: Qt.AlignTop | Qt.AlignRight
+
             Button {
                 id: save1
                 text: qsTr("Save")
                 style: buttonStyle
+            //onClicked:
             }
             Button {
                 id: cancel1
                 text: qsTr("Cancel")
                 style: buttonStyle
-            }
-        }
-    }
-
-
-    MessageDialog {
-        id: aboutDialog
-        icon: StandardIcon.Information
-        title: qsTr("About")
-        text: "Qt Quick UI Forms"
-        informativeText: qsTr("This example demonstrates how to separate the implementation of an application from the UI using ui.qml files.")
-    }
-
-    MenuBar {
-        Menu {
-            title: qsTr("&File")
-            MenuItem {
-                text: qsTr("E&xit")
-                //shortcut: StandardKey.Quit
-                onTriggered: Qt.quit()
-            }
-        }
-        Menu {
-            title: qsTr("&Help")
-            MenuItem {
-                text: qsTr("About...")
-                onTriggered: aboutDialog.open()
-            }
         }
     }
 
