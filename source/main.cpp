@@ -9,73 +9,51 @@
 #include "keyboard.h"
 
 
-static bool exists(QString path)
-{
-    QDir d(path);
-    return d.exists();
-}
-
-
 //  main
 //-----------------------------------------------------------------------------------------------------------
 int main(int argc, char **argv)
 {
     QGuiApplication app(argc, argv);
 
-    //  find data path
-    QString adp = QCoreApplication::applicationDirPath(), data;
-    data = adp + "/data/";
-    if (!exists(data)) {
-        data = adp + "/../data/";
-        if (!exists(data)) {
-            data = adp + "/../../data/";
-            if (!exists(data)) {
+    Keyboard kbd;  // paths
+    if (!kbd.Init(QCoreApplication::applicationDirPath()))
+    {
                 //QMessageBox(QMessageBox::Critical, "CKeys", "Can't find data path!", QMessageBox::Ok);
                 return -1;
-    }   }   }
+    }
 
     //  main.qml  gui create, load
     qmlRegisterType<Squircle>("QSquircle", 1, 0, "Squircle");
 
 
     QQuickView view;
-    view.setSource(QUrl::fromLocalFile(data + "main.qml"));
+    view.setSource(QUrl::fromLocalFile(kbd.data + "main.qml"));
     QQmlEngine& engine = *view.engine();
     view.create();
 
 
-    //  list files in dir, layout json
-    //====================================
-    QDir path(data);
-    QStringList files = path.entryList(QStringList("*.json"), QDir::Files);
 
+    //  list files in dir, layout .json
+    //----------------------------
+    QDir path(kbd.data);
+    kbd.files = path.entryList(QStringList("*.json"), QDir::Files);
 
-    //  fill combobox  ----
+    //  fill combobox
     ComboBoxModel combo;
-    combo.setComboList(files);
+    combo.setComboList(kbd.files);
     view.rootContext()->setContextProperty("comboModel", &combo);
 
+    GuiEvent ev;
+    view.rootContext()->setContextProperty("GuiEvent", &ev);
 
+    QQmlComponent cBtn(&engine, QUrl::fromLocalFile(kbd.data + "Button.qml"));
 
-    //Squircle* sq = view.findChild<Squircle*>("base");  //-
-    //const QVariant &parent = QVariant::fromValue<QObject*>(/*root/*engine.rootObjects().first()*/);
-    QQmlComponent cBtn(&engine, QUrl::fromLocalFile(data + "Button.qml"));
-
-    Keyboard kbd;
     ev.kbd = &kbd;
-    kbd.LoadFromJson(cBtn, view.rootContext(), data.toStdString() + "default.json");
+    kbd.cBtn = &cBtn;
+    kbd.root = view.rootObject();  //engine.rootObjects().first();
+    //QObject *wnd = root->findChild<QObject*>("window");
 
-
-    //  info
-    //-----------------------------------------------------------
-    #if 0
-    QObject *o = co.create();
-    o->setProperty("xx", 20);  o->setProperty("yy", 20);
-    o->setProperty("w", 100);  o->setProperty("h", 30);
-    o->setProperty("sc", 16);
-    o->setProperty("txt", "Info");
-    o->setProperty("parent", parent);
-    #endif
+    kbd.LoadIndex(2);  // last .set
 
 
     //  run

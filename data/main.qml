@@ -43,20 +43,32 @@ Item {
     RowLayout {
         anchors.top: parent.top
         anchors.left: parent.left
-        //anchors.margins: 10
         anchors.topMargin: 8
         anchors.leftMargin: 12
         spacing: 12
 
         Label {
-            id: label1
             //color: white
 
-            text: qsTr("Title")
+            text: "Layout"
             width: 100
 
             font.family: "Tahoma"
             font.pixelSize: 16
+        }
+
+        ComboBox {
+            //currentIndex: 2
+            //activeFocusOnPress: true
+
+            width: 160
+            style: comboStyle
+
+            model: comboModel.comboList
+            onCurrentIndexChanged: {
+                GuiEvent.comboChange(currentIndex)
+                //console.log(currentIndex)  //+
+            }
         }
 
         /*Item {
@@ -64,39 +76,6 @@ Item {
             Layout.preferredHeight: 14
             Layout.preferredWidth: 14
         }*/
-
-
-        ComboBox {
-            //id: box
-            //currentIndex: 2
-            activeFocusOnPress: true
-
-            style: comboStyle
-
-            ListModel {
-               id: list
-               objectName:"list"
-                    }
-
-            id: typeComboBox
-
-            model: comboModel.comboList
-
-            /*menu: ContextMenu {
-                MenuItem { text: "Option A"}
-                MenuItem { text: "Option B"}
-            }*/
-
-            //model: model1
-            /* ListModel {
-                id: cbItems
-                ListElement { text: "Banana" }
-                ListElement { text: "Apple" }
-                ListElement { text: "Coconut" }
-            }*/
-            width: 160
-        }
-
 
         /*TextField {  //editbox
             id: firstName
@@ -141,7 +120,7 @@ Item {
                 id: save1
                 text: qsTr("Save")
                 style: buttonStyle
-            //onClicked:
+            onClicked: GuiEvent.btnClick()
             }
             Button {
                 id: cancel1

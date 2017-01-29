@@ -3,6 +3,10 @@
 
 #include <QObject>
 #include <QStringList>
+#include <QDebug>
+
+#include "keyboard.h"
+
 
 class ComboBoxModel : public QObject
 {
@@ -37,5 +41,30 @@ private:
     QStringList m_comboList;
     int         m_count;
 };
+
+
+class GuiEvent : public QObject
+{
+    Q_OBJECT
+
+public:
+
+    GuiEvent()
+        : kbd(0)
+    {   }
+
+
+    Q_INVOKABLE void comboChange(int id) const {
+        qDebug() << "id: " << id;
+        kbd->LoadIndex(id);
+    }
+
+    Q_INVOKABLE void btnClick() const {
+        qDebug() << "aaa";
+    }
+
+    class Keyboard* kbd;
+};
+
 
 #endif // COMBOBOXMODEL_H
