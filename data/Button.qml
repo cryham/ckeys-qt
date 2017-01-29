@@ -2,9 +2,9 @@ import QtQuick 2.0
 
 Item {
     id: button
-    //  key caption strings top,bottom or middle
+    //  key caption string
     property string txt: ""
-    //  font scale factor
+    //  font size
     property real sc: 12.0
 
     //  position
