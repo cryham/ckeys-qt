@@ -1,7 +1,7 @@
 #pragma once
 #include <QObject>
 #include <QStringList>
-#include <QDebug>
+//#include <QDebug>
 
 #include "keyboard.h"
 

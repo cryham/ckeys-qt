@@ -5,7 +5,8 @@ HEADERS += \
     keyboard.h \
     ComboBoxModel.h \
     HQTimer.h \
-    background.h
+    background.h \
+    KeyNames.h
 SOURCES += main.cpp \
     jsmn.c \
     keyboard.cpp \

@@ -1,4 +1,5 @@
 #include "keyboard.h"
+#include "KeyNames.h"
 #include <string>
 #include <fstream>
 #include <sstream>
@@ -13,6 +14,13 @@ using namespace std;
 Keyboard::Keyboard()
     :cBtn(0),root(0)
 {
+    //  filled vk 2 str maps from csKeyNames
+    for (int k=0; k < 256; ++k)
+    {
+        string s = csKeyNames[k];
+        //vk2str[k] = s;
+        str2vk[s] = k;
+	}
 }
 
 //  find data path
@@ -38,6 +46,7 @@ void Keyboard::Remove()
         o->deleteLater();
     }
     objs.clear();
+    vk2obj.clear();
 }
 
 //  load layout, from combo id
@@ -116,7 +125,7 @@ void Keyboard::LoadFromJson(std::string path)
             else
             {
                 //  replace
-                /*bool has2 =*/ replK(k, "\\n", "\n");  // key has 2 descr: upper, lower
+                bool has2 = replK(k, "\\n", "\n");  // key has 2 descr: upper, lower
                 replK(k, "Lock", "");  // rem Lock
                 replK(k, "\\\\", "\\");
                 replK(k, "\\\"", "\"");
@@ -134,6 +143,18 @@ void Keyboard::LoadFromJson(std::string path)
                 objs.push_back(o);
 
                 w = 1.f;  h = 1.f;  // reset
+
+                //  vk to key
+                if (has2)  // use the lower
+                {
+                    size_t p = k.find("\n");
+                    bool rep = p != std::string::npos;
+                    if (rep)
+                        k = k.substr(p+1);
+                }/**/
+                int vk = str2vk[k];
+                if (vk)  // if found
+                    vk2obj[vk] = o;
         }   }
         else
         if (t[i].type == JSMN_PRIMITIVE)

@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <map>
 #include <QQmlComponent>
 #include <QStringList>
 #include <QDir>
@@ -31,6 +32,11 @@ public:
     QQmlComponent* cBtn;
     QObject *root;
     std::vector<QObject*> objs;  // key buttons
+    std::map<int, QObject*> vk2obj;  // vk code to key
+
+    //  filled on init, from csKeyNames
+    //std::map<int, std::string> vk2str;
+    std::map<std::string, int> str2vk;
 };
 
 
