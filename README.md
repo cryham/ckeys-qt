@@ -10,3 +10,8 @@ Reads custom keyboard layouts, from json files (using jsmn parser library),
 outputed from this web based editor: www.keyboard-layout-editor.com  
 Supports only basic rectangular layouts, no rotation or styling.  
 The default.json layout is the ANSI 104 preset (top left combo).
+
+Screenshot
+----------
+
+![](https://raw.githubusercontent.com/cryham/ckeys/master/screenshot.png)
