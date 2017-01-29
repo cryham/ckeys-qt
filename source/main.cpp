@@ -90,12 +90,13 @@ int main(int argc, char **argv)
     QQuickView view;
     view.setResizeMode(QQuickView::SizeRootObjectToView);
     //view.setFlags();
-    view.setSource(QUrl("qrc:///main.qml"));
+    view.setSource(QUrl::fromLocalFile(data + "main.qml"));
     view.create();
 
 //    Squircle* sq = view.findChild<Squircle*>("base");  //-
     const QVariant &parent = QVariant::fromValue<QObject*>(view.rootObject());
-    QQmlComponent co(view.engine(), QUrl("qrc:///Button.qml"));
+    QQmlComponent co(view.engine(), QUrl::fromLocalFile(data + "Button.qml"));
+
 
 
     //  read json layout from file
@@ -139,7 +140,7 @@ int main(int argc, char **argv)
             else
             {
                 //  replace
-                bool k2 = replK(k, "\\n", "\n");  // key has 2 descr: up,dn
+                /*bool k2 =*/ replK(k, "\\n", "\n");  // key has 2 descr: up,dn
                 replK(k, "Lock", "");  // rem Lock
                 replK(k, "\\\\", "\\");
                 replK(k, "\\\"", "\"");

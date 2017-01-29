@@ -8,3 +8,7 @@ RESOURCES += ckeys.qrc
 
 target.path = bin
 INSTALLS += target
+
+DISTFILES += \
+    ../data/Button.qml \
+    ../data/main.qml
