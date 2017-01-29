@@ -1,14 +1,16 @@
 QT += qml quick
 
-HEADERS += squircle.h \
+HEADERS += \
     jsmn.h \
     keyboard.h \
-    comboboxmodel.h
-SOURCES += squircle.cpp main.cpp \
+    ComboBoxModel.h
+    background.h
+SOURCES += main.cpp \
     jsmn.c \
     keyboard.cpp \
-    comboboxmodel.cpp
-RESOURCES += ckeys.qrc
+    ComboBoxModel.cpp
+    background.cpp
+RESOURCES +=
 
 target.path = bin
 INSTALLS += target
