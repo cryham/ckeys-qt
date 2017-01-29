@@ -85,9 +85,9 @@ int main(int argc, char **argv)
         data += "/data/";
 
     //  qml gui create, load
-    qmlRegisterType<Squircle>("OpenGLUnderQML", 1, 0, "Squircle");
-
+    qmlRegisterType<Squircle>("QSquircle", 1, 0, "Squircle");
     QQuickView view;
+
     view.setResizeMode(QQuickView::SizeRootObjectToView);
     //view.setFlags();
     view.setSource(QUrl::fromLocalFile(data + "main.qml"));
