@@ -57,12 +57,34 @@
 using namespace std;
 
 #include "squircle.h"
+#include "jsmn.h"
+
+
+static bool replK(string& str, const string& what, const string& to)
+{
+    size_t p = str.find(what);
+    bool rep = p != string::npos;
+    if (rep)
+        str.replace(p, what.length(), to);
+    return rep;
+}
 
 
 int main(int argc, char **argv)
 {
     QGuiApplication app(argc, argv);
 
+    //  find data path
+	QString data = app.applicationDirPath();
+    if (data.contains("build"))
+        data += "/../../data/";
+    else
+    if (data.contains("bin"))
+        data += "/../data/";
+    else
+        data += "/data/";
+
+    //  qml gui create, load
     qmlRegisterType<Squircle>("OpenGLUnderQML", 1, 0, "Squircle");
 
     QQuickView view;
