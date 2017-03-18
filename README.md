@@ -1,4 +1,8 @@
-# Crystal Keys (cKeys)
+### Abandoned.
+Using Qt and QML would require shipping extra 55 MB in DLLs (mainly Qt), and in total 130 files.
+No way I'd agree with this. So I moved to SFML and ImGui, instead.
+
+## Crystal Keys (cKeys)
 Windows program showing pressed keys and keyboard layouts.
 
 It is a support program for my keyboards CK3 and CK4 (more on [my website](https://cryham.tuxfamily.org/archives/portfolio/crystal-keyboard-3-and-4)),  
